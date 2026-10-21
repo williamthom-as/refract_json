@@ -1,0 +1,24 @@
+[
+  {
+    "name": "alice",
+    "amount": 1.50,
+    "account": 123456789012,
+    "count": 3,
+    "rate": 2.5e3,
+    "flag": true,
+    "note": null,
+    "tags": ["a", "b"],
+    "address": {"city": "Perth", "geo": {"lat": -31.95}}
+  },
+  {
+    "name": "bob",
+    "amount": -2.25,
+    "account": 7,
+    "count": 0,
+    "rate": 0.1,
+    "flag": false,
+    "tags": [],
+    "address": {"city": "Hobart"},
+    "extra": {}
+  }
+]

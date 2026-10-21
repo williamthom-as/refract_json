@@ -1,0 +1,10 @@
+{
+  "customers": [
+    {"customer": "c1", "name": "alice"},
+    {"customer": "c2", "name": "bob"}
+  ],
+  "orders": [
+    {"order": "o1", "customer": "c1", "total": 10},
+    {"order": "o2", "customer": "c2", "total": 12.5}
+  ]
+}

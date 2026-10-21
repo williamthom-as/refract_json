@@ -1,0 +1,5 @@
+[
+  {"sku": 78632478, "item": "apple"},
+  {"sku": 78632479, "item": "pear"},
+  {"sku": 78632480, "item": "fig", "discount": 0.5}
+]
