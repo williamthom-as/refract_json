@@ -15,3 +15,9 @@ orders_page.json                  object with one records array   an api page of
 golden/simple_joins/names.json    array of objects                refract core golden simple_joins names as json
 golden/simple_joins/ages.jsonl    a record per line               refract core golden simple_joins ages as json lines
 golden/simple_joins/expected.csv                                  copied from refract core golden simple_joins
+api/orders_1.json                 object with one records array   an api page of orders with nested lines a nested customer id and a next link
+api/orders_2.json                 object with one records array   the last page an order without lines and a key only on page two
+api/customer_2.json               one object                      a customer detail response holding an addresses array
+api/customer_5.json               one object                      a customer detail response with no addresses
+api/products.json                 object keyed by sku             products by sku
+api/expected.csv                                                  lines joined to orders customers and products computed by python json and decimal from the responses not by refract

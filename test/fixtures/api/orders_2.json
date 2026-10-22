@@ -1,0 +1,13 @@
+{
+  "data": [
+    {"id": 103, "placed": "2026-10-03", "customer": {"id": 5}, "lines": []},
+    {
+      "id": 104,
+      "placed": "2026-10-04",
+      "customer": {"id": 2},
+      "coupon": "WELCOME",
+      "lines": [{"id": 4, "sku": 78632478, "qty": 2}]
+    }
+  ],
+  "next": null
+}

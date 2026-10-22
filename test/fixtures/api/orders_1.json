@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": 101,
+      "placed": "2026-10-01",
+      "customer": {"id": 2},
+      "lines": [
+        {"id": 1, "sku": 78632478, "qty": 3},
+        {"id": 2, "sku": 78632479, "qty": 1, "discount": {"code": "TEN"}}
+      ]
+    },
+    {
+      "id": 102,
+      "placed": "2026-10-02",
+      "customer": {"id": 5},
+      "lines": [{"id": 3, "sku": 78632480, "qty": 12}]
+    }
+  ],
+  "next": "/orders?page=2"
+}
