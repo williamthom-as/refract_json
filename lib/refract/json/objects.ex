@@ -2,22 +2,18 @@ defmodule Refract.JSON.Objects do
   @moduledoc false
 
   alias Refract.JSON.Text
+  alias Refract.Writer
 
   @spec encode(Enumerable.t(), [String.t()] | nil) :: Enumerable.t()
 
-  def encode(rows, nil) do
-    Stream.transform(rows, nil, fn
-      row, nil ->
-        header = row |> Map.keys() |> Enum.sort()
-
-        {[object(row, header)], header}
-
-      row, header ->
-        {[object(row, header)], header}
+  def encode(rows, header) do
+    rows
+    |> Writer.cells(header)
+    |> Stream.transform(nil, fn
+      header, nil -> {[], header}
+      values, header -> {[object(header, values)], header}
     end)
   end
-
-  def encode(rows, header), do: Stream.map(rows, &object(&1, header))
 
   @spec validate_header([String.t()] | nil) :: :ok
 
@@ -33,6 +29,5 @@ defmodule Refract.JSON.Objects do
     raise ArgumentError, "header must be a list of names, got: #{inspect(header)}"
   end
 
-  defp object(row, header),
-    do: Text.iodata({:object, Enum.map(header, &{&1, Map.fetch!(row, &1)})})
+  defp object(header, values), do: Text.iodata({:object, Enum.zip(header, values)})
 end
