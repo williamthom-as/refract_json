@@ -10,7 +10,7 @@ defmodule Refract.JSONL do
 
       {:ok, rows} = Refract.JSONL.stream("events.jsonl")
       {:ok, result} = Refract.JSONL.classify("events.jsonl", shapes, scan: 1_000)
-      {:ok, paths} = Refract.JSONL.write_chunks(rows, "out", prefix: "events", rows_per_file: 100_000)
+      {:ok, paths} = Refract.JSONL.write_chunks(rows, "out/events.jsonl", rows_per_file: 100_000)
   """
 
   use Refract.Reader
@@ -38,6 +38,11 @@ defmodule Refract.JSONL do
 
   @impl Refract.Reader
   def extensions, do: ["jsonl", "ndjson"]
+
+  @spec indexing() :: :records
+
+  @impl Refract.Reader
+  def indexing, do: :records
 
   @spec open(Refract.source(), [open_opt()]) :: {:ok, Enumerable.t()} | {:error, term()}
 

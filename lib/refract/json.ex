@@ -45,6 +45,11 @@ defmodule Refract.JSON do
   @impl Refract.Reader
   def extensions, do: ["json"]
 
+  @spec indexing() :: :records
+
+  @impl Refract.Reader
+  def indexing, do: :records
+
   @spec open(Refract.source(), [open_opt()]) :: {:ok, Enumerable.t()} | {:error, term()}
 
   @impl Refract.Reader

@@ -32,7 +32,7 @@ defmodule Refract.JSONProfileTest do
     path
   end
 
-  test "spellings group, lines count records after the header row", %{tmp_dir: dir} do
+  test "spellings group, lines count records from 1", %{tmp_dir: dir} do
     path =
       write(
         dir,
@@ -46,12 +46,43 @@ defmodule Refract.JSONProfileTest do
              clusters: [
                %Cluster{
                  variants: [
-                   %Variant{value: "north", count: 2, lines: [2, 4]},
-                   %Variant{value: "North", count: 1, lines: [3]}
+                   %Variant{value: "north", count: 2, lines: [1, 3]},
+                   %Variant{value: "North", count: 1, lines: [2]}
                  ]
                }
              ]
            } = column
+  end
+
+  test "validate issues name the record, counting from 1", %{tmp_dir: dir} do
+    path =
+      write(
+        dir,
+        "ledger.json",
+        Jason.encode!([
+          %{"account" => "A-1", "cost_centre" => ""},
+          %{"account" => "", "cost_centre" => "x"}
+        ])
+      )
+
+    shape =
+      Shape.new(
+        name: "ledger",
+        spec: ledger().spec,
+        validation: [columns: %{"account" => [:required], "cost_centre" => [:required]}]
+      )
+
+    assert {:ok, %{issues: [%{line: 1, column: "cost_centre"}, %{line: 2, column: "account"}]}} =
+             JSON.validate(path, shape)
+  end
+
+  test "jsonl lines name the record too", %{tmp_dir: dir} do
+    path = write(dir, "ledger.jsonl", Enum.map_join(["north", "North"], "\n", &record/1) <> "\n")
+
+    assert {:ok, %{columns: %{"cost_centre" => %Column{clusters: [cluster]}}}} =
+             JSONL.profile(path, ledger())
+
+    assert Enum.map(cluster.variants, & &1.lines) == [[1], [2]]
   end
 
   test "jsonl records profile the same way", %{tmp_dir: dir} do
@@ -93,6 +124,6 @@ defmodule Refract.JSONProfileTest do
     assert %{columns: %{"cost_centre" => %Column{clusters: [%Cluster{variants: variants}]}}} =
              result
 
-    assert Enum.map(variants, & &1.files) == [%{json => [2]}, %{jsonl => [2]}]
+    assert Enum.map(variants, & &1.files) == [%{json => [1]}, %{jsonl => [1]}]
   end
 end
