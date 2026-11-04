@@ -50,11 +50,21 @@ defmodule Refract.JSON do
   @impl Refract.Reader
   def indexing, do: :records
 
+  @spec open_options() :: keyword()
+
+  @impl Refract.Reader
+  def open_options, do: [at: nil, keyed: nil, unnest: nil, keep: %{}]
+
+  @spec encode_options() :: keyword()
+
+  @impl Refract.Writer
+  def encode_options, do: [header: nil]
+
   @spec open(Refract.source(), [open_opt()]) :: {:ok, Enumerable.t()} | {:error, term()}
 
   @impl Refract.Reader
   def open(source, opts) do
-    opts = Keyword.validate!(opts, at: nil, keyed: nil, unnest: nil, keep: %{})
+    opts = Keyword.validate!(opts, open_options())
     at = Keyword.fetch!(opts, :at)
     keyed = Keyword.fetch!(opts, :keyed)
     unnest = Keyword.fetch!(opts, :unnest)
@@ -74,7 +84,7 @@ defmodule Refract.JSON do
 
   @impl Refract.Reader
   def facts(source, opts) do
-    opts = Keyword.validate!(opts, at: nil, keyed: nil, unnest: nil, keep: %{})
+    opts = Keyword.validate!(opts, open_options())
     at = Keyword.fetch!(opts, :at)
     keyed = Keyword.fetch!(opts, :keyed)
     unnest = Keyword.fetch!(opts, :unnest)
@@ -130,7 +140,7 @@ defmodule Refract.JSON do
 
   @impl Refract.Writer
   def encode(rows, opts) do
-    opts = Keyword.validate!(opts, header: nil)
+    opts = Keyword.validate!(opts, encode_options())
     header = Keyword.fetch!(opts, :header)
 
     Objects.validate_header(header)
