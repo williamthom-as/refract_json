@@ -4,12 +4,8 @@
 /doc/
 /.fetch
 erl_crash.dump
-
 *.ez
-refract-*.tar
-
+refract_json-*.tar
 /tmp/
-
 /sandpit/
-
 /priv/plts/
